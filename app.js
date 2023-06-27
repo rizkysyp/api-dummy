@@ -32,6 +32,16 @@ app.get('/', (req, res) => {
   res.json(data);
 });
 
+app.get('/:id', (req, res) => {
+  const id = req.params.id; // Get the value of ":id" from the request URL
+  const matchedData = data.find(item => item.id.toString() === id);
+
+  if (matchedData) {
+    res.json(matchedData);
+  } else {
+    res.status(404).json({ message: 'Data not found' });
+  }
+});
 app.use('/users', usersRouter);
 
 // catch 404 and forward to error handler
