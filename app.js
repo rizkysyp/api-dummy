@@ -34,7 +34,7 @@ app.get('/', (req, res) => {
 
 app.get('/:id', (req, res) => {
   const id = req.params.id; // Get the value of ":id" from the request URL
-  const matchedData = data.find(item => item.id.toString() === id);
+  const matchedData = data.find(item => item.id_pelanggan.toString() === id);
 
   if (matchedData) {
     res.json(matchedData);
