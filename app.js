@@ -42,6 +42,17 @@ app.get('/:id', (req, res) => {
     res.status(404).json({ message: 'Data not found' });
   }
 });
+
+pp.get('/phone/:id', (req, res) => {
+  const id = req.params.id; // Get the value of ":id" from the request URL
+  const matchedData = data.find(item => item.phoneNumber.toString() === id);
+
+  if (matchedData) {
+    res.json(matchedData);
+  } else {
+    res.status(404).json({ message: 'Data not found' });
+  }
+});
 app.use('/users', usersRouter);
 
 // catch 404 and forward to error handler
