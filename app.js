@@ -22,7 +22,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 const data = [
   { id: 1,id_pelanggan: 1111, nama: "Rizky", status: 0 ,kota: "batam",phoneNumber : "0938292"},
   { id: 2,id_pelanggan: 2222, nama: "Satria", status: 1 ,kota: "Jakarta" ,phoneNumber : "02182727"},
-  { id: 3,id_pelanggan: 3333,nama: "Yaqin", status: 2 ,kota: "Bekasi",phoneNumber : "028229"}
+  { id: 3,id_pelanggan: 3333,nama: "Yaqin", status: 2 ,kota: "Bekasi",phoneNumber : "028229"},
   { id: 4,id_pelanggan: 4444, nama: "Vira", status: 0 ,kota: "Yogyakarta",phoneNumber : "929291"},
   { id: 5,id_pelanggan: 5555, nama: "Rizky S", status: 1 ,kota: "batam",phoneNumber : "2020228"},
   // tambahkan data lain di sini
