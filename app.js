@@ -43,7 +43,7 @@ app.get('/:id', (req, res) => {
   }
 });
 
-pp.get('/phone/:id', (req, res) => {
+app.get('/phone/:id', (req, res) => {
   const id = req.params.id; // Get the value of ":id" from the request URL
   const matchedData = data.find(item => item.phoneNumber.toString() === id);
 
