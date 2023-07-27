@@ -3,8 +3,8 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-var multer = require('multer');
-var cloudinary = require('cloudinary').v2;
+// var multer = require('multer');
+// var cloudinary = require('cloudinary').v2;
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -12,11 +12,11 @@ var usersRouter = require('./routes/users');
 var app = express();
 
 // Cloudinary configuration
-cloudinary.config({
-  cloud_name: 'dtow6mgju',
-  api_key: '259468891937896',
-  api_secret: 'O7JrZxKF4Q13x0Y_dqnrOhKcnsE'
-});
+// cloudinary.config({
+//   cloud_name: 'dtow6mgju',
+//   api_key: '259468891937896',
+//   api_secret: 'O7JrZxKF4Q13x0Y_dqnrOhKcnsE'
+// });
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
