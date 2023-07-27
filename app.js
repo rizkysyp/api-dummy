@@ -37,8 +37,8 @@ const data = [
   // tambahkan data lain di sini
 ];
 
-// File upload middleware
-const upload = multer({ dest: 'uploads/' });
+// // File upload middleware
+// const upload = multer({ dest: 'uploads/' });
 
 app.get('/', (req, res) => {
   res.json(data);
@@ -67,30 +67,30 @@ app.get('/phone/:id', (req, res) => {
 });
 
 // Image upload API
-app.post('/upload', upload.single(), (req, res) => {
-  if (!req.file) {
-    res.status(400).json({ message: 'No image file found' });
-    return;
-  }
+// app.post('/upload', upload.single(), (req, res) => {
+//   if (!req.file) {
+//     res.status(400).json({ message: 'No image file found' });
+//     return;
+//   }
 
-  // Access the uploaded file through req.file
-  const { path, originalname } = req.file;
+//   // Access the uploaded file through req.file
+//   const { path, originalname } = req.file;
 
-  // Upload the file to Cloudinary
-  cloudinary.uploader.upload(path, { folder: 'uploads' }, (error, result) => {
-    if (error) {
-      console.log('Error uploading image:', error);
-      res.status(500).json({ message: 'Failed to upload image' });
-    } else {
-      // Log the Cloudinary response to the console
-      console.log('Cloudinary response:', result);
-      res.json({ message: 'Image uploaded successfully', url: result.secure_url });
-    }
+//   // Upload the file to Cloudinary
+//   cloudinary.uploader.upload(path, { folder: 'uploads' }, (error, result) => {
+//     if (error) {
+//       console.log('Error uploading image:', error);
+//       res.status(500).json({ message: 'Failed to upload image' });
+//     } else {
+//       // Log the Cloudinary response to the console
+//       console.log('Cloudinary response:', result);
+//       res.json({ message: 'Image uploaded successfully', url: result.secure_url });
+//     }
 
-    // Remove the temporary file from the server
-    fs.unlinkSync(path);
-  });
-});
+//     // Remove the temporary file from the server
+//     fs.unlinkSync(path);
+//   });
+// });
 
 app.use('/users', usersRouter);
 
