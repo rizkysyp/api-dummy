@@ -3,6 +3,7 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var fs = require('fs');
 // var multer = require('multer');
 // var cloudinary = require('cloudinary').v2;
 
@@ -28,23 +29,27 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-const data = [
-  { id: 1,id_pelanggan: 1111, nama: "Rizky", status: 0 ,kota: "batam",phoneNumber : "081300000001",alamat: "Jalan"},
-  { id: 2,id_pelanggan: 2222, nama: "Satria", status: 1 ,kota: "Jakarta" ,phoneNumber : "081300000002",alamat : "Jalan Acumalaka"},
-  { id: 3,id_pelanggan: 3333,nama: "Yaqin", status: 2 ,kota: "Bekasi",phoneNumber : "081300000003", alamat: null},
-  { id: 4,id_pelanggan: 4444, nama: "Vira", status: 0 ,kota: "Yogyakarta",phoneNumber : "081300000004",alamat : "Jalan Geming"},
-  { id: 5,id_pelanggan: 5555, nama: "Rizky S", status: 1 ,kota: "batam",phoneNumber : "081300000001",alamat : "Jalan Anu"},
-  // tambahkan data lain di sini
-];
 
 // // File upload middleware
 // const upload = multer({ dest: 'uploads/' });
 
+function readData() {
+  const rawData = fs.readFileSync('dummy.json', 'utf-8');
+  return JSON.parse(rawData);
+}
+
+// Fungsi untuk menyimpan data ke file JSON
+function saveData(data) {
+  fs.writeFileSync('dummy.json', JSON.stringify(data, null, 3), 'utf-8');
+}
+
 app.get('/', (req, res) => {
+  const data = readData();
   res.json(data);
 });
 
 app.get('/:id', (req, res) => {
+  const data = readData();
   const id = req.params.id; // Get the value of ":id" from the request URL
   const matchedData = data.find(item => item.id_pelanggan.toString() === id || item.phoneNumber.toString() === id);
 
@@ -56,11 +61,28 @@ app.get('/:id', (req, res) => {
 });
 
 app.get('/phone/:id', (req, res) => {
+  const data = readData();
   const id = req.params.id; // Get the value of ":id" from the request URL
   const matchedData = data.find(item => item.phoneNumber.toString() === id);
 
   if (matchedData) {
     res.json(matchedData);
+  } else {
+    res.status(404).json({ message: 'Data not found' });
+  }
+});
+
+app.put('/api/data/:id', (req, res) => {
+  const { id } = req.params;
+  const { alamat } = req.body;
+
+  const data = readData();
+  const index = data.findIndex((item) => item.id_pelanggan === parseInt(id));
+
+  if (index !== -1) {
+    data[index].alamat = alamat;
+    saveData(data);
+    res.status(200).json({ message: 'Alamat has been updated', data: data[index] });
   } else {
     res.status(404).json({ message: 'Data not found' });
   }
@@ -95,12 +117,12 @@ app.get('/phone/:id', (req, res) => {
 app.use('/users', usersRouter);
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   next(createError(404));
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
